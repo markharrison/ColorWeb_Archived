@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  colorweb:
+    image: colorweb
+    build:
+      context: ./ColorWeb
+      dockerfile: Dockerfile

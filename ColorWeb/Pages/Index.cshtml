@@ -1,0 +1,104 @@
+﻿@page
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Colors</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <h1>Mark Harrison - Colors</h1>
+
+    <div id="idBalls">
+    </div>
+
+    <br />
+    <button id="idButStart" onclick="doStart()">Start</button>&nbsp;&nbsp;
+    <button id="idButConfig" onclick="document.location='config'">Config</button>
+    
+    <script>
+        var APIUrl = "http://hotjetblack:8080";
+        var iBalls = 500;
+        var iMaxPollTimer = 60000;
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }    
+
+
+        function ColorTrigger(x) {
+
+             $.ajax({
+                url: APIUrl,
+                success: function (data) {
+                    $('#idBall' + x.toString()).css({ fill: data });
+
+                    var iDelay = Math.ceil(Math.random() * iMaxPollTimer);
+                    setTimeout(function (xx) { ColorTrigger(xx) }, iDelay, x);
+
+                    },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (XMLHttpRequest.status == 0) {
+                        alert('Check Your Network.');
+                    } else if (XMLHttpRequest.status == 404) {
+                        alert('Not found');
+                    } else if (XMLHttpRequest.status == 500) {
+                        alert('Internal server error');
+                    } else {
+                        alert('Unknown error: ' + XMLHttpRequest.responseText);
+                    }
+                }
+            });
+        }
+
+        function doStart() {
+
+            $("#idButStart #idButConfig").hide();
+
+            var iDelay = 0;
+            for (var i = 0; i < iBalls; i++) {
+                iDelay = Math.ceil( Math.random() * iMaxPollTimer );
+                setTimeout(function (xx) { ColorTrigger(xx) }, iDelay, i);
+            }
+        } 
+
+        function doDefaultReady() {
+            var vHTML = "";
+            
+            APIUrl = decodeURIComponent(readCookie("APIUrl")) + "/api/RandomColor"; 
+
+            for (var i = 0; i < iBalls; i++) {
+                vHTML += "<svg height='30' width='30'><circle id='idBall" + i.toString() + "' cx='15' cy='15' r='12' stroke='black' stroke-width='1' fill='white' /></svg>";
+            }
+
+            $("#idBalls").append(vHTML);
+
+        }
+
+        $(document).ready(function () {
+            doDefaultReady();
+        });
+
+    </script>
+</body>
+</html>
+

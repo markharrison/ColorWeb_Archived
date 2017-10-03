@@ -1,0 +1,31 @@
+﻿@page
+@using ColorWeb
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ConfigModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Colors</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Mark Harrison - Colors</h1>
+    <h2>Config</h2>
+
+    @using (Html.BeginForm())
+    {
+        <span>API URL:</span>
+        <input asp-for="APIUrl" /><br /><br />
+        <input type="submit" id="Submit" value="Submit">
+    }
+
+</body>
+</html>
