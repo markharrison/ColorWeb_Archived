@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ColorWeb
+namespace ColorWeb.Pages
 {
     public class ConfigModel : PageModel
     {
@@ -16,24 +16,26 @@ namespace ColorWeb
             if (vURL != null)
                 APIUrl = vURL.ToString();
             else
-                APIUrl = "http://address/";
+                APIUrl = "https://markcolorapi.azurewebsites.net/api/randomcolor";
         }
+
 
         public IActionResult OnPost()
         {
-            if (APIUrl.EndsWith('/'))
-                APIUrl = APIUrl.TrimEnd('/');
-
-            Response.Cookies.Append("APIUrl", APIUrl,
-                        new CookieOptions
-                        {
-                            HttpOnly = false,
-                            Secure = false,
-                            Expires = DateTime.Now.AddMonths(12)
-                        }
+            if (APIUrl != null)
+            {
+                Response.Cookies.Append("APIUrl", APIUrl,
+                    new CookieOptions
+                    {
+                        HttpOnly = false,
+                        Secure = false,
+                        Expires = DateTime.Now.AddMonths(12)
+                    }
                 );
+                return RedirectToPage("/Default");
+            }
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Config");
         }
     }
 }
