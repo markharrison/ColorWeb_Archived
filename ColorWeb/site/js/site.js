@@ -53,7 +53,7 @@ function doStart() {
     var iDelay = 0;
     for (var i = 0; i < iBalls; i++) {
         iDelay = Math.ceil(Math.random() * iMaxPollTimer);
-        setTimeout(function (xx) { ColorTrigger(xx) }, iDelay, i);
+        setTimeout(function (xx) { ColorTrigger(xx); }, iDelay, i);
     }
 }
 
