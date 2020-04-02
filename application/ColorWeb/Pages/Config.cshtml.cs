@@ -34,7 +34,7 @@ namespace ColorWeb.Pages
                         Expires = DateTime.Now.AddMonths(12)
                     }
                 );
-                return RedirectToPage("/");
+                return RedirectToPage("/Index");
             }
 
             return RedirectToPage("/Config");
