@@ -2,5 +2,5 @@
 
 Also see:
 
-- https://github.com/markharrison/ColourWeb
-- https://github.com/markharrison/ColourAPI
+- https://github.com/markharrison/ColoursWeb
+- https://github.com/markharrison/ColoursAPI
